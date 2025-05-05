@@ -10,18 +10,17 @@ namespace JWTAuthenticationManager.Extensions
         /// Adds and configures JWT authentication and authorization services for the application.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to which the authentication services will be added.</param>
-        /// <param name="configuration">An instance of <see cref="JwtConfiguration"/> that provides the JWT settings, 
-        /// token validation parameters, and bearer options.</param>
-        /// <exception cref="Exception">
-        /// Thrown if the <paramref name="configuration"/> parameter is null.
-        /// </exception>
-        public static void AddJwtAuthentication(this IServiceCollection services, JwtConfiguration configuration)
+        /// <param name="options">The options for configuring JWT authentication.</param>
+        /// <param name="settings">The settings for JWT authentication, including token validation parameters, and bearer options.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> or <paramref name="settings"/> is null.</exception>
+        public static void AddJwtAuthentication(this IServiceCollection services, JwtBearerOptions options, JwtSettings settings)
         {
-            ArgumentNullException.ThrowIfNull(configuration);
+            ArgumentNullException.ThrowIfNull(options);
+            ArgumentNullException.ThrowIfNull(settings);
 
-            services.AddSingleton(configuration.TokenValidationParameters);
-            services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>(sp => new JwtAuthenticationManager(configuration.JwtSettings));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { options = configuration.JwtBearerOptions; });
+            services.AddSingleton(options.TokenValidationParameters);
+            services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>(sp => new JwtAuthenticationManager(settings));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o => o = options);
             services.AddAuthorization();
         }
     }

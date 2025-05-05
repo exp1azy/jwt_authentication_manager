@@ -15,7 +15,7 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<PackageId>Jwt.Authentication.Manager</PackageId>
-	<PackageReleaseNotes>added support for net7.0 and net9.0</PackageReleaseNotes>
+	<PackageReleaseNotes></PackageReleaseNotes>
 	<Version>1.1.0</Version>
   </PropertyGroup>
 

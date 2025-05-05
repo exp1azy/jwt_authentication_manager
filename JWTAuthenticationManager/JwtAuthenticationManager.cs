@@ -10,14 +10,19 @@ namespace JWTAuthenticationManager
     /// Default implementation of <see cref="IJwtAuthenticationManager"/> that uses symmetric key signing
     /// to generate JWT tokens with configurable settings.
     /// </summary>
-    /// <remarks>
-    /// Initializes a new instance of the <see cref="JwtAuthenticationManager"/> class.
-    /// </remarks>
-    /// <param name="settings">The <see cref="JwtSettings"/> used to configure token generation (issuer, audience, secret key, expiration).</param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="settings"/> is null.</exception>
-    public class JwtAuthenticationManager(JwtSettings settings) : IJwtAuthenticationManager
+    public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
-        private readonly JwtSettings _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        private readonly JwtSettings _settings;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JwtAuthenticationManager"/> class.
+        /// </summary>
+        /// <param name="settings">The JWT settings used to generate and validate tokens.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="settings"/> is null.</exception>
+        public JwtAuthenticationManager(JwtSettings settings)
+        {
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        }
 
         /// <inheritdoc />
         public string GenerateToken(List<Claim> claims)
