@@ -15,5 +15,14 @@ namespace JWTAuthenticationManager.Interfaces
         /// A signed JWT as a <see cref="string"/> containing the specified claims, ready to be returned to the client.
         /// </returns>
         public string GenerateToken(List<Claim> claims);
+
+        /// <summary>
+        /// Calculates the remaining lifetime, in seconds, of the specified JWT token.
+        /// </summary>
+        /// <param name="token">The JWT token string to analyze.</param>
+        /// <returns>
+        /// A <see cref="double"/> value representing the number of seconds remaining until the token expires.
+        /// </returns>
+        public double GetRemainingLifeTime(string token);
     }
 }

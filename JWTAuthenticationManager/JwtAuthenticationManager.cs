@@ -46,5 +46,16 @@ namespace JWTAuthenticationManager
             
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        /// <inheritdoc />
+        public double GetRemainingLifeTime(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token is not provided.");
+            
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            return jwtToken.ValidTo.Subtract(DateTime.UtcNow).TotalSeconds;
+        }
     }
 }

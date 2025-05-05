@@ -40,5 +40,4 @@
         /// </remarks>
         public int ExpirationInMinutes { get; set; }
     }
-
 }
