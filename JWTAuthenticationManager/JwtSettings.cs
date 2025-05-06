@@ -21,7 +21,7 @@
         /// This value identifies the authority that issued the token.
         /// It's used during token validation to ensure the token came from a trusted source.
         /// </remarks>
-        public string Issuer { get; set; } = null!;
+        public string? Issuer { get; set; }
 
         /// <summary>
         /// Gets or sets the audience (aud) claim for the JWT token.
@@ -30,7 +30,15 @@
         /// This value identifies the intended recipient(s) of the token.
         /// It's used during validation to ensure the token is meant for the current application.
         /// </remarks>
-        public string Audience { get; set; } = null!;
+        public string? Audience { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time before which the JWT token is not valid.
+        /// </summary>
+        /// <remarks>
+        /// Used during token validation to ensure the token hasn't expired.
+        /// </remarks>
+        public DateTime? NotBefore { get; set; }
 
         /// <summary>
         /// Gets or sets the lifetime of the JWT token in minutes.
@@ -38,6 +46,6 @@
         /// <remarks>
         /// After this duration, the token will expire and must be refreshed or re-issued.
         /// </remarks>
-        public int ExpirationInMinutes { get; set; }
+        public int? ExpirationInMinutes { get; set; }
     }
 }

@@ -18,9 +18,40 @@ namespace JWTAuthenticationManager.Extensions
             ArgumentNullException.ThrowIfNull(options);
             ArgumentNullException.ThrowIfNull(settings);
 
-            services.AddSingleton(options.TokenValidationParameters);
             services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>(sp => new JwtAuthenticationManager(settings));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o => o = options);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
+            {
+                o.Audience = options.Audience;
+                o.Authority = options.Authority;
+                o.AutomaticRefreshInterval = options.AutomaticRefreshInterval;
+                o.Backchannel = options.Backchannel;
+                o.BackchannelHttpHandler = options.BackchannelHttpHandler;
+                o.BackchannelTimeout = options.BackchannelTimeout;
+                o.Challenge = options.Challenge;
+                o.ClaimsIssuer = options.ClaimsIssuer;
+                o.Configuration = options.Configuration;
+                o.ConfigurationManager = options.ConfigurationManager;
+                o.Events = options.Events;
+                o.EventsType = options.EventsType;
+                o.ForwardAuthenticate = options.ForwardAuthenticate;
+                o.ForwardChallenge = options.ForwardChallenge;
+                o.ForwardDefault = options.ForwardDefault;
+                o.ForwardDefaultSelector = options.ForwardDefaultSelector;
+                o.ForwardForbid = options.ForwardForbid;
+                o.ForwardSignIn = options.ForwardSignIn;
+                o.ForwardSignOut = options.ForwardSignOut;
+                o.IncludeErrorDetails = options.IncludeErrorDetails;
+                o.MapInboundClaims = options.MapInboundClaims;
+                o.MetadataAddress = options.MetadataAddress;
+                o.RefreshInterval = options.RefreshInterval;
+                o.RefreshOnIssuerKeyNotFound = options.RefreshOnIssuerKeyNotFound;
+                o.RequireHttpsMetadata = options.RequireHttpsMetadata;
+                o.SaveToken = options.SaveToken;
+                o.SecurityTokenValidators.Clear();
+                foreach (var validator in options.SecurityTokenValidators)
+                    o.SecurityTokenValidators.Add(validator);
+                o.TokenValidationParameters = options.TokenValidationParameters;
+            });
             services.AddAuthorization();
         }
     }

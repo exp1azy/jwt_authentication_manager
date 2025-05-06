@@ -11,10 +11,11 @@ namespace JWTAuthenticationManager.Interfaces
         /// Generates a JWT string based on the provided claims.
         /// </summary>
         /// <param name="claims">A list of <see cref="Claim"/> instances that will be embedded in the token payload.</param>
+        /// <param name="securityAlgorithm">The algorithm used to sign the token. Default is <see cref="SecurityAlgorithm.HmacSha256"/>.</param>
         /// <returns>
         /// A signed JWT as a <see cref="string"/> containing the specified claims, ready to be returned to the client.
         /// </returns>
-        public string GenerateToken(List<Claim> claims);
+        public string GenerateToken(List<Claim> claims, SecurityAlgorithm securityAlgorithm = SecurityAlgorithm.HmacSha256);
 
         /// <summary>
         /// Calculates the remaining lifetime, in seconds, of the specified JWT token.
