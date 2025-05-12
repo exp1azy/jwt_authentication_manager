@@ -2,6 +2,17 @@
 
 This library provides a reusable implementation of JWT-based authentication for ASP.NET Core applications. The goal is to avoid repeating boilerplate code across projects and simplify the setup of secure, token-based authentication. The library is intended for internal use or integration into microservices where consistent authentication logic is required.
 
+## Description
+Main entities of the library:
+1. `IJwtAuthenticationManager` - Defines the contract for generating JWT tokens used in authentication and authorization.
+2. `JwtAuthenticationManager` - Default implementation of `IJwtAuthenticationManager` that uses symmetric key signing to generate JWT tokens with configurable settings.
+3. `JwtSettings` - Represents configuration settings used for generating and validating JWT tokens.
+
+Below are the main methods for working with JWT:
+1. `AddJwtAuthentication()` - Adds and configures JWT authentication and authorization services for the application. Is an extension method for `IServiceCollection`.
+2. `GenerateToken()` - Generates a JWT string based on the provided claims.
+3. `GetRemainingLifeTime()` - Calculates the remaining lifetime, in seconds, of the specified JWT token.
+
 ## Usage
 Add JWT authentication in `Program.cs`
 ```csharp
