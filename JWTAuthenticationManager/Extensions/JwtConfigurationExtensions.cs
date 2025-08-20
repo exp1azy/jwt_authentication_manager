@@ -18,7 +18,7 @@ namespace JWTAuthenticationManager.Extensions
             ArgumentNullException.ThrowIfNull(options);
             ArgumentNullException.ThrowIfNull(settings);
 
-            services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>(sp => new JwtAuthenticationManager(settings));
+            services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>(_ => new JwtAuthenticationManager(settings));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
             {
                 o.Audience = options.Audience;

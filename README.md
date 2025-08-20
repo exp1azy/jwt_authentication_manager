@@ -12,6 +12,7 @@ Below are the main methods for working with JWT:
 1. `AddJwtAuthentication()` - Adds and configures JWT authentication and authorization services for the application. Is an extension method for `IServiceCollection`.
 2. `GenerateToken()` - Generates a JWT string based on the provided claims.
 3. `GetRemainingLifeTime()` - Calculates the remaining lifetime, in seconds, of the specified JWT token.
+4. `ReadToken()` - Reads a JWT token from a string.
 
 ## Usage
 Add JWT authentication in `Program.cs`
@@ -51,6 +52,7 @@ builder.Services.AddJwtAuthentication(
     }
 );
 ```
+---
 **! you don't have to write `AddAuthorization()`, because the `AddJwtAuthentication()` method already does that !**
 ---
 Then you can use the `IJwtAuthenticationManager` interface in your services and controllers from DI container:

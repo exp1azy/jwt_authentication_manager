@@ -14,6 +14,7 @@ namespace JWTAuthenticationManager
     public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
         private readonly JwtSettings _settings;
+        private readonly JwtSecurityTokenHandler _tokenHandler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JwtAuthenticationManager"/> class.
@@ -23,6 +24,7 @@ namespace JWTAuthenticationManager
         public JwtAuthenticationManager(JwtSettings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _tokenHandler = new JwtSecurityTokenHandler();
         }
 
         /// <inheritdoc />
@@ -46,12 +48,12 @@ namespace JWTAuthenticationManager
                 issuer: _settings.Issuer,
                 audience: _settings.Audience,
                 claims: claims,
-                expires: _settings.ExpirationInMinutes == null ? null : DateTime.UtcNow.AddMinutes(_settings.ExpirationInMinutes.Value),
                 notBefore: _settings.NotBefore ?? now,
+                expires: _settings.ExpirationInMinutes == null ? null : DateTime.UtcNow.AddMinutes(_settings.ExpirationInMinutes.Value),
                 signingCredentials: credentials
             );
             
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return _tokenHandler.WriteToken(token);
         }
 
         /// <inheritdoc />
@@ -63,13 +65,23 @@ namespace JWTAuthenticationManager
             if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
                 token = token["Bearer ".Length..].Trim();
 
-            var handler = new JwtSecurityTokenHandler();
-
-            if (!handler.CanReadToken(token))
+            if (!_tokenHandler.CanReadToken(token))
                 throw new SecurityTokenMalformedException("The token is not in a valid JWT format.");
 
-            var jwtToken = handler.ReadJwtToken(token);
+            var jwtToken = _tokenHandler.ReadJwtToken(token);
             return jwtToken.ValidTo.Subtract(DateTime.UtcNow).TotalSeconds;
+        }
+
+        /// <inheritdoc />
+        public JwtSecurityToken ReadToken(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token is not provided.");
+
+            if (!_tokenHandler.CanReadToken(token))
+                throw new SecurityTokenMalformedException("The token is not in a valid JWT format.");
+
+            return _tokenHandler.ReadJwtToken(token);
         }
     }
 }

@@ -15,8 +15,8 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<PackageId>Jwt.Authentication.Manager</PackageId>
-	<PackageReleaseNotes></PackageReleaseNotes>
-	<Version>2.2.1</Version>
+	<PackageReleaseNotes>ReadToken</PackageReleaseNotes>
+	<Version>2.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace JWTAuthenticationManager.Interfaces
 {
@@ -25,5 +26,12 @@ namespace JWTAuthenticationManager.Interfaces
         /// A <see cref="double"/> value representing the number of seconds remaining until the token expires.
         /// </returns>
         public double GetRemainingLifeTime(string token);
+
+        /// <summary>
+        /// Reads a JWT token from a string.
+        /// </summary>
+        /// <param name="token">The JWT token string to read.</param>
+        /// <returns><see cref="JwtSecurityToken"/> instance representing the token.</returns>
+        public JwtSecurityToken ReadToken(string token);
     }
 }

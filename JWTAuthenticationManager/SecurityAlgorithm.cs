@@ -1,5 +1,8 @@
 ﻿namespace JWTAuthenticationManager
 {
+    /// <summary>
+    /// Represents different security algorithms used for generating and validating JWT tokens.
+    /// </summary>
     public enum SecurityAlgorithm
     {
         Aes128Encryption,
